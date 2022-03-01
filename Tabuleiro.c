@@ -12,7 +12,7 @@ char** alocBoard(){
             board[i] = (char*) calloc(ALTURABOARD,sizeof(char));
         }
     }else{
-        printf("Externo Erro ao alocar memoria\n");
+        printf("Erro ao alocar memoria\n");
         return NULL;
     }
     return board;
@@ -61,18 +61,6 @@ void printDirectons(char direction){
         printf(" | %c |",direction);
     default:
         break;
-    }
-}
-
-void printComands(char *comandos){
-    int i,j;
-    for(i=0;i<3;i++){
-       for(j=0;j<3;j++){
-            if(*comandos[i][j]!=0){
-                printf("| %c ",comandos[i][j]);
-            }
-       }
-       printf("|")
     }
 }
 
