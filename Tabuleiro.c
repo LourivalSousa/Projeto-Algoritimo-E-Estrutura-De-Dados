@@ -3,47 +3,6 @@
 #define LADOBOARD 8
 #define ALTURABOARD 8
 
-char** alocBoard(){
-    int i;
-    char **board;
-    board = (char*) malloc(LADOBOARD*sizeof(char));
-    if(board!=NULL){
-        for(i=0;i<LADOBOARD;i++){
-            board[i] = (char*) calloc(ALTURABOARD,sizeof(char));
-        }
-    }else{
-        printf("Erro ao alocar memoria\n");
-        return NULL;
-    }
-    return board;
-}
-
-void desalocarBoard(char **board){
-    int i;
-    for(i=0;i<LADOBOARD;i++){
-        free(board[i]);
-    }
-    free(board);
-}
-
-void initBoard(char **board){
-    board[0][0] = 'P';
-    board[1][1] = 'X';
-    board[2][1] = 'X';
-    board[2][3] = 'X';
-    board[2][4] = 'X';
-    board[2][7] = 'X';
-    board[3][7] = 'X';
-    board[5][4] = 'X';
-    board[5][5] = 'X';
-    board[5][6] = 'X';
-    board[6][0] = 'X';
-    board[7][0] = 'X';
-    board[7][3] = 'X';
-    board[7][4] = 'X';
-    board[7][7] = 'O';
-}
-
 void printDirectons(char direction){
     printf("DIRECOES \n");
     switch (direction)
@@ -64,12 +23,9 @@ void printDirectons(char direction){
     }
 }
 
-void printBoard(){
+void printBoard(char **ptrBoard){
     system("cls");
     int i,j;
-    char **ptrBoard;
-    ptrBoard = alocBoard();
-    initBoard(ptrBoard);
     for(i=0; i<LADOBOARD; i++){
         printf("|---|---|---|---|---|---|---|---|\n");
         printf("|");
@@ -93,9 +49,4 @@ void printBoard(){
     printf("\n");
     printDirectons('>');
     desalocarBoard(ptrBoard);
-}
-
-int main (){
-   printBoard();
-    return 0;
 }
