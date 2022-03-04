@@ -9,7 +9,7 @@ void printDirectons(char direction){
     {
     case '>':
     case '<':
-        printf(" | P%c |",direction);
+        printf(" | P%c |\n",direction);
         break;
     case '^':
         printf(" | %c |\n",direction);
@@ -23,7 +23,7 @@ void printDirectons(char direction){
     }
 }
 
-void printBoard(char **ptrBoard){
+void printBoard(char (*ptrBoard)[8]){
     system("cls");
     int i,j;
     for(i=0; i<LADOBOARD; i++){
@@ -39,14 +39,11 @@ void printBoard(char **ptrBoard){
                 printf(" %c |",ptrBoard[i][j]);
                 break;
             default:
-                printf("   |",ptrBoard[i][j]);
+                printf("   |");
                 break;
             }
         }
-         printf("\n");
+        printf("\n");
     }
     printf("|---|---|---|---|---|---|---|---|\n");
-    printf("\n");
-    printDirectons('>');
-    desalocarBoard(ptrBoard);
 }

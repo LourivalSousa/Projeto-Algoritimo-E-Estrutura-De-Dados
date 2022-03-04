@@ -2,3 +2,6 @@
 *.exe
 testeFila.c
 testePilha.c
+testeMovimentar.c
+testeMatriz.c
+mainTeste.c
