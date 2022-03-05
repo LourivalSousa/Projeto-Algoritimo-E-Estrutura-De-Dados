@@ -60,6 +60,7 @@ Comandos desempilhar(NO **topo){
 }
 
 void impressaoNaoClassicaPilha(NO *topo){
+    printf("Pilha: ");
     if(!vazia(topo)){
         NO *aux;
         aux = topo;
@@ -69,7 +70,7 @@ void impressaoNaoClassicaPilha(NO *topo){
         }
         printf("\n");
     }else{
-        printf("ERRO-Pilha vazia...\n");
+        printf("Vazia\n");
     }
 }
 
@@ -78,7 +79,7 @@ Comandos retornarTopo (NO *topo){
         Comandos elemento = topo->info;
         return elemento;
     }else{
-        printf("ERRO-Pilha vazia...\n");
+        printf("Vazia\n");
     }
     return;
 }

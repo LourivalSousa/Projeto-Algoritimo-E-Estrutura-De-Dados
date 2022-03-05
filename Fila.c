@@ -81,7 +81,7 @@ void impressaoNaoClassicaFila(Fila *ptrFila){
         }
         printf("\n");
     }else{
-        printf("ERRO-Fila vazia...\n");
+        printf("Vazia\n");
     }
 }
 

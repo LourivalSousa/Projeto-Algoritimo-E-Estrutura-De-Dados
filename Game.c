@@ -3,28 +3,14 @@
 #include "Tabuleiro.c"
 
 
-// char** alocBoard(){
-//     int i,j;
-//     char **board;
-//     board = (char*) malloc(LADOBOARD*sizeof(char));
-//     if(board!=NULL){
-//         for(i=0;i<LADOBOARD;i++){
-//             board[i] = (char*) malloc(ALTURABOARD*sizeof(char));
-//         }
-//     }else{
-//         printf("Erro ao alocar memoria\n");
-//         return NULL;
-//     }
-//     return board;
-// }
+void initMoviment(int *ptrPosicao, char *ptrDirecao){
+    ptrPosicao[0] = 0;
+    ptrPosicao[1] = 1;
+    ptrDirecao = ">";
+}
 
-// void desalocarBoard(char **board){
-//     int i;
-//     for(i=0;i<LADOBOARD;i++){
-//         free(board[i]);
-//     }
-//     free(board);
-// }
+
+
 
 
 void initBoard(char (*ptrMatriz)[8]){
