@@ -4,10 +4,10 @@
 #include "Game.c"
 
 void comandosFaseUm(char (*ptrComandos)[4]){
-    int i;
+    int i,j;
 
     for(i=0;i<4;i++){
-        for(int j=0;j<4;j++){
+        for(j=0;j<4;j++){
             ptrComandos[1][i] = '0';
         }
     }
@@ -26,12 +26,16 @@ void comandosFaseUm(char (*ptrComandos)[4]){
     ptrComandos[3][1] = 'E';
 }
 
-int FaseUm(){
+int faseUm(){
     char matriz[8][8],comandos[4][4];
     char (*ptrMatriz)[8] = matriz;
     char (*ptrComandos)[4] = comandos;
     initBoard(ptrMatriz);
     comandosFaseUm(ptrComandos);
+    printBoard(ptrMatriz);
+    // printDirectons('>');
+    printComands(ptrComandos,'<');
+    return 1;
 }
 
 
@@ -40,5 +44,6 @@ int main (){
     // char (*ptrMatriz)[8] = matriz;
     // char (*ptrComandos)[4] = comandos;
     // initBoard(ptrMatriz);
+    faseUm();
     return 0;
 }
