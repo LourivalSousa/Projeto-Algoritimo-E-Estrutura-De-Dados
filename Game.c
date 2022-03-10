@@ -15,19 +15,19 @@ void initMoviment(int *ptrPosicao, char *ptrDirecao){
 
 void initBoard(char (*ptrMatriz)[8]){
     ptrMatriz[0][0] = 'P';
-    ptrMatriz[1][1] = 'X';
-    ptrMatriz[2][1] = 'X';
-    ptrMatriz[2][3] = 'X';
+    ptrMatriz[1][0] = 'X';
+    ptrMatriz[1][3] = 'X';
+    ptrMatriz[1][4] = 'X';
     ptrMatriz[2][4] = 'X';
-    ptrMatriz[2][7] = 'X';
-    ptrMatriz[3][7] = 'X';
-    ptrMatriz[5][4] = 'X';
-    ptrMatriz[5][5] = 'X';
+    ptrMatriz[2][6] = 'X';
+    ptrMatriz[3][6] = 'X';
+    ptrMatriz[4][2] = 'X';
+    ptrMatriz[4][3] = 'X';
+    ptrMatriz[4][4] = 'X';
     ptrMatriz[5][6] = 'X';
+    ptrMatriz[5][7] = 'X';
     ptrMatriz[6][0] = 'X';
-    ptrMatriz[7][0] = 'X';
-    ptrMatriz[7][3] = 'X';
-    ptrMatriz[7][4] = 'X';
+    ptrMatriz[6][1] = 'X';
     ptrMatriz[7][7] = 'O';
 }
 
