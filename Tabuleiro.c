@@ -8,8 +8,10 @@ void printDirectons(char direction){
     switch (direction)
     {
     case '>':
-    case '<':
         printf(" | P%c |\n",direction);
+        break;
+    case '<':
+        printf(" | %cP |\n",direction);
         break;
     case '^':
         printf(" | %c |\n",direction);
