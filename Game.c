@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Tabuleiro.c"
+
 
 
 void initMoviment(int *ptrPosicao, char *ptrDirecao){
@@ -9,16 +9,14 @@ void initMoviment(int *ptrPosicao, char *ptrDirecao){
     ptrDirecao = ">";
 }
 
-
-
-
+// criar funcao reset board que recebe a ultima posicao de p e  a matriz e reanjarra o tabuleiro
 
 void initBoard(char (*ptrMatriz)[8]){
     ptrMatriz[0][0] = 'P';
     ptrMatriz[1][0] = 'X';
     ptrMatriz[1][3] = 'X';
     ptrMatriz[1][4] = 'X';
-    ptrMatriz[2][4] = 'X';
+    ptrMatriz[2][0] = 'X';
     ptrMatriz[2][6] = 'X';
     ptrMatriz[3][6] = 'X';
     ptrMatriz[4][2] = 'X';
