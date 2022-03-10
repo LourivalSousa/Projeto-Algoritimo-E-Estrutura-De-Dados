@@ -3,23 +3,60 @@
 #define LADOBOARD 8
 #define ALTURABOARD 8
 
-void printDirectons(char direction){
-    printf("DIRECOES \n");
+void printComands(char (*ptrComandos)[4],char direction){
+    int i,j;
+    printf("Comandos: ");
+    printf("                DIRECAO \n");
+    for(i=0;i<4;i++){
+        printf("%d) |",i+1);
+        for(j=0;j<4;j++){
+           switch(ptrComandos[i][j]){
+            case 'F':
+            case 'E':
+            case 'D':
+                printf(" %c |",ptrComandos[i][j]);
+                break;
+            default:
+                printf("    ");
+                break;
+           }
+        }
+        if(i<2){
+            printDirectons(direction,i);
+        }
+        printf("\n");
+    }
+}
+void printDirectons(char direction,int linha){
+    // printf("DIRECOES \n");
     switch (direction)
     {
     case '>':
-        printf(" | P%c |\n",direction);
+        if(linha==0){
+            printf("       | P%c |",direction);
+        }
         break;
     case '<':
-        printf(" | %cP |\n",direction);
+        if(linha==0){
+            printf("       | %cP |",direction);
+        }
         break;
     case '^':
-        printf(" | %c |\n",direction);
-        printf(" | P |");
+        if(linha==0){
+            printf("       | %c |",direction);
+        }
+        if(linha==1){
+            printf("       | P |");
+        }
         break;
     case 'v':
-        printf(" | P |\n");
-        printf(" | %c |",direction);
+        if(linha==0){
+            printf("       | P |");
+        }
+        if(linha==1){
+            printf("       | %c |",direction);
+        }
+        break;
     default:
         break;
     }
@@ -47,5 +84,5 @@ void printBoard(char (*ptrBoard)[8]){
         }
         printf("\n");
     }
-    printf("|---|---|---|---|---|---|---|---|\n");
+    printf("|---|---|---|---|---|---|---|---|\n\n");
 }
