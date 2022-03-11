@@ -43,6 +43,7 @@ void executarComandos(Comandos comandosJogo,char (*ptrMatriz)[8],char (*ptrComan
                 x = ptrPosicao[0];
                 y = ptrPosicao[1];
             }
+            printf("%c",*ptrDirecao);
             movimentar(ptrPosicao,comando,ptrDirecao);
             if(posicaoValida(ptrPosicao,ptrMatriz)){
                 ptrMatriz[x][y]=' ';
@@ -85,13 +86,14 @@ int faseUm(){
     Comandos comandosJogo;
     int tentativa = 3, posicao[2];
     int ptrPosicao = &posicao;
-    char matriz[8][8],comandos[4][4],direcao='>';
-    char ptrDirecao = &direcao;
+    char matriz[8][8],comandos[4][4],direcao;
+    char *ptrDirecao = &direcao;
     char (*ptrMatriz)[8] = matriz;
     char (*ptrComandos)[4] = comandos;
     Fila *ptrFila;
     //Inicializando o jogo
     initBoard(ptrMatriz);
+    initMoviment(ptrPosicao,ptrDirecao);
     comandosFaseUm(ptrComandos);
     ptrFila = (Fila*) malloc(sizeof(Fila));
     inicializarFila(ptrFila);
