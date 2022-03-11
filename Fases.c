@@ -2,6 +2,39 @@
 #include <stdlib.h>
 #include "Tabuleiro.c"
 #include "Game.c"
+#include "Fila.c"
+#include "Pilha.c"
+
+
+Comandos pegarComando(){
+    Comandos input;
+    printf("Digite 0 para sair\n");
+    printf("Digite o comando: ");
+    scanf("%d",&input.comando);
+    printf("Digite o numero de vezes que quer executar este comando: ");
+    scanf("%d",&input.vezes);
+    return input;
+}
+
+
+void enfileirarComandos(*ptrFila){
+    Comandos comandosJogador;
+    do {
+        comandosJogador = pegarComando();
+        enfileirar(ptrFila,comandosJogador);
+    } while (comandosJogador.comando<1 || comandosJogador.vezes<1);
+    
+// }
+
+void pegarComandosJogadorPilha(**ptrPilha){
+    Comandos comandosJogador;
+    do {
+        comandosJogador = pegarComando();
+        empilhar(ptrPilha,comandosJogador);
+    } while (comandosJogador.comando<1 || comandosJogador.vezes<1);
+}
+
+
 
 void comandosFaseUm(char (*ptrComandos)[4]){
     int i,j;
@@ -33,8 +66,8 @@ int faseUm(){
     initBoard(ptrMatriz);
     comandosFaseUm(ptrComandos);
     printBoard(ptrMatriz);
-    // printDirectons('>');
-    printComands(ptrComandos,'<');
+    printComands(ptrComandos,'v');
+    
     return 1;
 }
 
