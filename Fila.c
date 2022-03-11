@@ -29,7 +29,7 @@ void inicializarFila(Fila *ptrFila){
     ptrFila->fim = NULL;
 }
  
-int vazia(Fila *ptrFila){
+int filaVazia(Fila *ptrFila){
     if(ptrFila->inicio==NULL){
         return 1;
     }
@@ -43,7 +43,7 @@ void enfileirar(Fila *ptrFila,Comandos elemento){
         novo->info.comando = elemento.comando;
         novo->info.vezes = elemento.vezes;
         novo->prox = NULL;
-        if(vazia(ptrFila)){
+        if(filaVazia(ptrFila)){
             ptrFila->inicio = novo;
             ptrFila->fim = novo;
         }else{
@@ -58,20 +58,20 @@ void enfileirar(Fila *ptrFila,Comandos elemento){
 Comandos desinfileirar (Fila *ptrFila){
     NO *aux;
     Comandos elemento;
-    if(!vazia(ptrFila)){
+    if(!filaVazia(ptrFila)){
         elemento = (ptrFila->inicio)->info;
         aux = ptrFila->inicio;
         (ptrFila->inicio) = (ptrFila->inicio)->prox;
         desalocarNo(aux);
         return elemento;
     }else{
-        printf("ERRO-Fila vazia...\n");
+        printf("ERRO-Fila filaVazia...\n");
     }
     return elemento;
 }
 
 void impressaoNaoClassicaFila(Fila *ptrFila){
-    if(!vazia(ptrFila)){
+    if(!filaVazia(ptrFila)){
         NO *aux;
         aux = ptrFila->inicio;
         printf("Fila: ");
@@ -87,7 +87,7 @@ void impressaoNaoClassicaFila(Fila *ptrFila){
 
 Comandos retornarInicio(Fila *ptrFila){
     Comandos elemento;
-    if(!vazia(ptrFila)){
+    if(!filaVazia(ptrFila)){
         elemento = (ptrFila->inicio)->info;
     }
     return elemento;

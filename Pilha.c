@@ -1,38 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct sComandos{
+typedef struct sComandosPilha{
     int comando;
     int vezes;
-}Comandos;
+}ComandosPilha;
 
-typedef struct sNO{
-    Comandos info;
+typedef struct sNOPilha{
+    ComandosPilha info;
     struct sNO *prox;
-}NO;
+}NOPilha;
 
 
-NO* alocarNo(){
-    return (NO*) malloc(sizeof(NO));
+NOPilha* alocarNo(){
+    return (NOPilha*) malloc(sizeof(NOPilha));
 }
  
-void desalocarNo(NO *No){
+void desalocarNo(NOPilha *No){
     free(No);
 }
  
-void inicializarPilha(NO **topo){
+void inicializarPilha(NOPilha **topo){
     *topo = NULL;
 }
  
-int vazia(NO *topo){
+int pilhaVazia(NOPilha *topo){
     if(topo==NULL){
         return 1;
     }
     return 0;
 }
 
-void empilhar(NO **topo, Comandos elemento){
-    NO *novo;
+void empilhar(NOPilha **topo, ComandosPilha elemento){
+    NOPilha *novo;
     novo = alocarNo();
     if(novo!=NULL){
         novo->info.comando = elemento.comando;
@@ -44,25 +44,25 @@ void empilhar(NO **topo, Comandos elemento){
     }
 }
 
-Comandos desempilhar(NO **topo){
-    NO *aux;
-    if(!vazia(*topo)){
-        Comandos elemento;
+ComandosPilha desempilhar(NOPilha **topo){
+    NOPilha *aux;
+    if(!pilhaVazia(*topo)){
+        ComandosPilha elemento;
         elemento =  (*topo)->info;
         aux = (*topo);
         (*topo) = (*topo)->prox;
         desalocarNo(aux);
         return elemento;
     }else{
-        printf("ERRO-Pilha vazia...\n");
+        printf("ERRO-Pilha pilhaVazia...\n");
     }
     return;
 }
 
-void impressaoNaoClassicaPilha(NO *topo){
+void impressaoNaoClassicaPilha(NOPilha *topo){
     printf("Pilha: ");
-    if(!vazia(topo)){
-        NO *aux;
+    if(!pilhaVazia(topo)){
+        NOPilha *aux;
         aux = topo;
         while(aux!=NULL){
             printf("%d-%d ",aux->info.comando,aux->info.vezes);
@@ -74,9 +74,9 @@ void impressaoNaoClassicaPilha(NO *topo){
     }
 }
 
-Comandos retornarTopo (NO *topo){
-    if(!vazia(topo)){
-        Comandos elemento = topo->info;
+ComandosPilha retornarTopo (NOPilha *topo){
+    if(!pilhaVazia(topo)){
+        ComandosPilha elemento = topo->info;
         return elemento;
     }else{
         printf("Vazia\n");

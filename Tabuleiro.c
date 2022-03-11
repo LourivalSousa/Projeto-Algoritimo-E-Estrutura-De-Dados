@@ -26,9 +26,9 @@ void printComands(char (*ptrComandos)[4],char direction){
         }
         printf("\n");
     }
+    printf("\n");
 }
 void printDirectons(char direction,int linha){
-    // printf("DIRECOES \n");
     switch (direction)
     {
     case '>':

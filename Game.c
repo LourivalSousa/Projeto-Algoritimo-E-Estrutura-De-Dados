@@ -7,7 +7,6 @@ void initMoviment(int *ptrPosicao, char *ptrDirecao){
     ptrDirecao = ">";
 }
 
-// criar funcao reset board que recebe a ultima posicao de p e  a matriz e reanjarra o tabuleiro
 void resetBoard(char (*ptrMatriz)[8],int *ptrCoord){
     int x = ptrCoord[0];
     int y = ptrCoord[1];
@@ -17,7 +16,6 @@ void resetBoard(char (*ptrMatriz)[8],int *ptrCoord){
     ptrCoord[0] = 0;
     ptrCoord[1] = 0;
 }
-
 
 
 void initBoard(char (*ptrMatriz)[8]){
