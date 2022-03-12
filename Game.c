@@ -4,10 +4,10 @@
 void initMoviment(int *ptrPosicao, char *ptrDirecao){
     ptrPosicao[0] = 0;
     ptrPosicao[1] = 0;
-    ptrDirecao = ">";
+    *ptrDirecao = '>';
 }
 
-void resetBoard(char (*ptrMatriz)[8],int *ptrCoord){
+void resetBoard(char (*ptrMatriz)[8],int *ptrCoord,int *ptrDirecao){
     int x = ptrCoord[0];
     int y = ptrCoord[1];
     ptrMatriz[x][y] = ' ';
@@ -15,6 +15,7 @@ void resetBoard(char (*ptrMatriz)[8],int *ptrCoord){
     ptrMatriz[7][7] = 'O';
     ptrCoord[0] = 0;
     ptrCoord[1] = 0;
+    *ptrDirecao = '>';
 }
 
 
@@ -122,9 +123,15 @@ int posicaoValida(int *ptrCoord,char (*ptrMatriz)[8]){
     int x,y;
     x = ptrCoord[0];
     y = ptrCoord[1];
-    if(x>7 && y>7) return 0;
-    if(x<0 && y<0) return 0;
-    if(ptrMatriz[x][y]=='X') return 0;
+    if(x > 7 || y > 7) {
+        return 0;
+    }
+    if(x < 0 || y < 0){
+        return 0;
+    } 
+    if(ptrMatriz[x][y]=='X') {
+        return 0;
+    }
     return 1;
 }
 

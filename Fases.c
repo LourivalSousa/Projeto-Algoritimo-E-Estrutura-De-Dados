@@ -7,9 +7,12 @@
 
 Comandos pegarComando(){
     Comandos input;
-    printf("Digite 0 para sair\n");
+    printf("Digite 0 para finalizar a escolha de comandos\n");
     printf("Digite o comando: ");
     scanf("%d",&input.comando);
+    if(input.comando==0){
+        return input;
+    }
     printf("Digite o numero de vezes que quer executar este comando: ");
     scanf("%d",&input.vezes);
     return input;
@@ -20,6 +23,9 @@ void enfileirarComandos(Fila *ptrFila){
     Comandos comandosJogador;
     do {
         comandosJogador = pegarComando();
+        if(comandosJogador.comando==0 || comandosJogador.vezes==0){
+            break;
+        }
         enfileirar(ptrFila,comandosJogador);
     } while (comandosJogador.comando > 0 || comandosJogador.vezes > 0);
 }
@@ -34,18 +40,16 @@ void enfileirarComandos(Fila *ptrFila){
 //}
 
 void executarComandos(Comandos comandosJogo,char (*ptrMatriz)[8],char (*ptrComandos)[4],char *ptrDirecao,int *ptrPosicao){
-    int i,x,y,coluna = 0;
+    int i,x=0,y=0,coluna = 0;
+    char comando;
     int linha =  comandosJogo.comando-1;
     for(i=0;i<comandosJogo.vezes;i++){
         while(ptrComandos[linha][coluna]!='0'){
-            char comando = ptrComandos[linha][coluna];
-            if(comando == 'F'){
-                x = ptrPosicao[0];
-                y = ptrPosicao[1];
-            }
-            printf("%c",*ptrDirecao);
+            comando = ptrComandos[linha][coluna];
+            x = ptrPosicao[0];
+            y = ptrPosicao[1];
             movimentar(ptrPosicao,comando,ptrDirecao);
-            if(posicaoValida(ptrPosicao,ptrMatriz)){
+            if(posicaoValida(ptrPosicao,ptrMatriz)!=0){
                 ptrMatriz[x][y]=' ';
                 x = ptrPosicao[0];
                 y = ptrPosicao[1];
@@ -54,6 +58,7 @@ void executarComandos(Comandos comandosJogo,char (*ptrMatriz)[8],char (*ptrComan
                 ptrPosicao[0] = x;
                 ptrPosicao[1] = y;
             }
+            coluna++;
         }
     }
 }
@@ -63,7 +68,7 @@ void comandosFaseUm(char (*ptrComandos)[4]){
 
     for(i=0;i<4;i++){
         for(j=0;j<4;j++){
-            ptrComandos[1][i] = '0';
+            ptrComandos[i][j] = '0';
         }
     }
     //Comando 1
@@ -85,20 +90,21 @@ int faseUm(){
     //  Variaveis do jogo
     Comandos comandosJogo;
     int tentativa = 3, posicao[2];
-    int ptrPosicao = &posicao;
+    int *ptrPosicao = &posicao;
     char matriz[8][8],comandos[4][4],direcao;
     char *ptrDirecao = &direcao;
     char (*ptrMatriz)[8] = matriz;
     char (*ptrComandos)[4] = comandos;
     Fila *ptrFila;
+    ptrFila = (Fila*) malloc(sizeof(Fila)); // validar se fila nao é NULL
     //Inicializando o jogo
     initBoard(ptrMatriz);
     initMoviment(ptrPosicao,ptrDirecao);
     comandosFaseUm(ptrComandos);
-    ptrFila = (Fila*) malloc(sizeof(Fila));
     inicializarFila(ptrFila);
-
+    
     while(tentativa!=0){
+        comandosFaseUm(ptrComandos);
         printBoard(ptrMatriz);
         printComands(ptrComandos,direcao);
         enfileirarComandos(ptrFila);
@@ -112,8 +118,17 @@ int faseUm(){
             impressaoNaoClassicaFila(ptrFila);
             comandosJogo = desinfileirar(ptrFila);
             executarComandos(comandosJogo,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
+            // sleep(2);
+            // system("cls");
+            // printBoard(ptrMatriz);
+            // printComands(ptrComandos,direcao);
             sleep(2);
             if(chegouObjetivo(ptrPosicao,ptrMatriz)){
+                printf("fila vazia? %d",filaVazia(ptrFila));
+                if(filaVazia(ptrFila)){
+                    return 1;
+                }
+                resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
                 break;
             }
@@ -121,6 +136,7 @@ int faseUm(){
         if(chegouObjetivo(ptrPosicao,ptrMatriz)){
             return 1;
         }else{
+            resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
             tentativa--;
         }
     }
