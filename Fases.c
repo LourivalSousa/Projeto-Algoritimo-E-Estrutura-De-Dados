@@ -108,7 +108,13 @@ int faseUm(){
         printBoard(ptrMatriz);
         printComands(ptrComandos,direcao);
         enfileirarComandos(ptrFila);
-        while(!filaVazia(ptrFila)){
+        // loop interno
+        while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
+             if(filaVazia(ptrFila)==1){
+                resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
+                tentativa--;
+                break;
+            }
             system("cls");
             printBoard(ptrMatriz);
             printComands(ptrComandos,direcao);
@@ -118,26 +124,23 @@ int faseUm(){
             impressaoNaoClassicaFila(ptrFila);
             comandosJogo = desinfileirar(ptrFila);
             executarComandos(comandosJogo,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
-            // sleep(2);
-            // system("cls");
-            // printBoard(ptrMatriz);
-            // printComands(ptrComandos,direcao);
-            sleep(2);
-            if(chegouObjetivo(ptrPosicao,ptrMatriz)){
-                printf("fila vazia? %d",filaVazia(ptrFila));
-                if(filaVazia(ptrFila)){
-                    return 1;
-                }
+            sleep(1);
+        }
+        printf("Chegou no objetivo: %d\n",chegouObjetivo(ptrPosicao,ptrMatriz));
+        sleep(1);
+        if(chegouObjetivo(ptrPosicao,ptrMatriz)==1){
+            printf("Chegou no objetivo");
+            if(filaVazia(ptrFila)==1){
+                return 1;
+            }else{
+                printf("Else externo");
+                sleep(1);
                 resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
-                break;
             }
         }
-        if(chegouObjetivo(ptrPosicao,ptrMatriz)){
-            return 1;
-        }else{
-            resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
-            tentativa--;
+        if(tentativa == 0){
+            return 0;
         }
     }
     return 0;

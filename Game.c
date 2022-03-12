@@ -139,7 +139,10 @@ int chegouObjetivo(int *ptrCoord,char (*ptrMatriz)[8]){
     int x,y;
     x = ptrCoord[0];
     y = ptrCoord[1];
-    if(ptrMatriz[x][y]=='O') return 1;
-    return 0;
+    if(x==7 && y==7) {
+        return 1;
+    }else{
+        return 0;
+    }
 }
 
