@@ -42,24 +42,22 @@ void enfileirarComandos(Fila *ptrFila){
 void executarComandos(Comandos comandosJogo,char (*ptrMatriz)[8],char (*ptrComandos)[4],char *ptrDirecao,int *ptrPosicao){
     int i,x=0,y=0,coluna = 0;
     char comando;
-    int linha =  comandosJogo.comando-1;
-    for(i=0;i<comandosJogo.vezes;i++){
-        while(ptrComandos[linha][coluna]!='0'){
-            comando = ptrComandos[linha][coluna];
+    int linha = comandosJogo.comando-1;
+    while(ptrComandos[linha][coluna]!='0'){
+        comando = ptrComandos[linha][coluna];
+        x = ptrPosicao[0];
+        y = ptrPosicao[1];
+        movimentar(ptrPosicao,comando,ptrDirecao);
+        if(posicaoValida(ptrPosicao,ptrMatriz)!=0){
+            ptrMatriz[x][y]=' ';
             x = ptrPosicao[0];
             y = ptrPosicao[1];
-            movimentar(ptrPosicao,comando,ptrDirecao);
-            if(posicaoValida(ptrPosicao,ptrMatriz)!=0){
-                ptrMatriz[x][y]=' ';
-                x = ptrPosicao[0];
-                y = ptrPosicao[1];
-                ptrMatriz[x][y] = 'P';
-            }else{
-                ptrPosicao[0] = x;
-                ptrPosicao[1] = y;
-            }
-            coluna++;
+            ptrMatriz[x][y] = 'P';
+        }else{
+            ptrPosicao[0] = x;
+            ptrPosicao[1] = y;
         }
+        coluna++;
     }
 }
 
@@ -88,8 +86,8 @@ void comandosFaseUm(char (*ptrComandos)[4]){
 
 int faseUm(){
     //  Variaveis do jogo
-    Comandos comandosJogo;
-    int tentativa = 3, posicao[2];
+    Comandos comandosJogo,comandosInicio;
+    int i,tentativa = 3, posicao[2];
     int *ptrPosicao = &posicao;
     char matriz[8][8],comandos[4][4],direcao;
     char *ptrDirecao = &direcao;
@@ -110,27 +108,36 @@ int faseUm(){
         enfileirarComandos(ptrFila);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
+            system("cls");
+            printBoard(ptrMatriz);
+            printComands(ptrComandos,direcao);
+            sleep(1);
              if(filaVazia(ptrFila)==1){
                 resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
                 break;
             }
-            system("cls");
-            printBoard(ptrMatriz);
-            printComands(ptrComandos,direcao);
-            Comandos comandosInicio = retornarInicio(ptrFila);
+            // system("cls");
+            // printBoard(ptrMatriz);
+            // printComands(ptrComandos,direcao);
+            comandosInicio = retornarInicio(ptrFila);
             printf("Comando: %d\n",comandosInicio.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicio.vezes);
             impressaoNaoClassicaFila(ptrFila);
             comandosJogo = desinfileirar(ptrFila);
-            executarComandos(comandosJogo,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
-            sleep(1);
+            for(i=0;i<comandosInicio.vezes;i++){
+                executarComandos(comandosJogo,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
+            }
+            // sleep(1);
         }
-        printf("Chegou no objetivo: %d\n",chegouObjetivo(ptrPosicao,ptrMatriz));
         sleep(1);
         if(chegouObjetivo(ptrPosicao,ptrMatriz)==1){
             printf("Chegou no objetivo");
             if(filaVazia(ptrFila)==1){
+                system("cls");
+                printBoard(ptrMatriz);
+                printComands(ptrComandos,direcao);
+                sleep(1);
                 return 1;
             }else{
                 printf("Else externo");
