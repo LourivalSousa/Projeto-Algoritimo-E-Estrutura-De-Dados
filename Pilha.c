@@ -12,11 +12,11 @@ typedef struct sNOPilha{
 }NOPilha;
 
 
-NOPilha* alocarNo(){
+NOPilha* alocarNoPilha(){
     return (NOPilha*) malloc(sizeof(NOPilha));
 }
  
-void desalocarNo(NOPilha *No){
+void desalocarNoPilha(NOPilha *No){
     free(No);
 }
  
