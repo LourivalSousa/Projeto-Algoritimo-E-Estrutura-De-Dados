@@ -3,26 +3,42 @@
 #include "Tabuleiro.c"
 #include "Game.c"
 #include "Fila.c"
+#include "Pilha.c"
 
-
-Comandos pegarComando(){
+Comandos pegarComandoFila(){
     Comandos input;
-    printf("Digite 0 para finalizar a escolha de comandos\n");
-    printf("Digite o comando: ");
+    printf("Para encerrar a escolha de comandos e prosseguir no jogo digite 0\n");
+    printf("Insira o comando: ");
     scanf("%d",&input.comando);
     if(input.comando==0){
         return input;
     }
-    printf("Digite o numero de vezes que quer executar este comando: ");
+    printf("Insira o numero de vezes que deseja executar este comando: ");
+    scanf("%d",&input.vezes);
+    return input;
+}
+ComandosPilha pegarComandoPilha(){
+    ComandosPilha input;
+    printf("Para encerrar a escolha de comandos e prosseguir no jogo digite 0\n");
+    printf("Insira o comando: ");
+    scanf("%d",&input.comando);
+    if(input.comando==0){
+        return input;
+    }
+    printf("Insira o numero de vezes que deseja executar este comando: ");
     scanf("%d",&input.vezes);
     return input;
 }
 
 
-void enfileirarComandos(Fila *ptrFila){
+void enfileirarComandos(Fila *ptrFila,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao){
     Comandos comandosJogador;
     do {
-        comandosJogador = pegarComando();
+        system("cls");
+        printBoard(ptrMatriz);
+        printComands(ptrComandos,direcao);
+        impressaoNaoClassicaFila(ptrFila);
+        comandosJogador = pegarComandoFila();
         if(comandosJogador.comando==0 || comandosJogador.vezes==0){
             break;
         }
@@ -30,19 +46,26 @@ void enfileirarComandos(Fila *ptrFila){
     } while (comandosJogador.comando > 0 || comandosJogador.vezes > 0);
 }
 
-//
-//void pegarComandosJogadorPilha(**ptrPilha){
-//    Comandos comandosJogador;
-//    do {
-//        comandosJogador = pegarComando();
-//        empilhar(ptrPilha,comandosJogador);
-//    } while (comandosJogador.comando<1 || comandosJogador.vezes<1);
-//}
 
-void executarComandos(Comandos comandosJogo,char (*ptrMatriz)[8],char (*ptrComandos)[4],char *ptrDirecao,int *ptrPosicao){
+void empilharComandos(NOPilha **ptrPilha,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao){
+    ComandosPilha comandosJogador;
+    do {
+        system("cls");
+        printBoard(ptrMatriz);
+        printComands(ptrComandos,direcao);
+        impressaoNaoClassicaPilha(*ptrPilha);
+        comandosJogador = pegarComandoPilha();
+        if(comandosJogador.comando==0 || comandosJogador.vezes==0){
+            break;
+        }
+        empilhar(ptrPilha,comandosJogador);
+    }while (comandosJogador.comando > 0 || comandosJogador.vezes > 0);
+}
+
+void executarComandos(int comandoJogo,char (*ptrMatriz)[8],char (*ptrComandos)[4],char *ptrDirecao,int *ptrPosicao){
     int i,x=0,y=0,coluna = 0;
     char comando;
-    int linha = comandosJogo.comando-1;
+    int linha = comandoJogo - 1;
     while(ptrComandos[linha][coluna]!='0'){
         comando = ptrComandos[linha][coluna];
         x = ptrPosicao[0];
@@ -93,9 +116,9 @@ int faseUm(){
     char *ptrDirecao = &direcao;
     char (*ptrMatriz)[8] = matriz;
     char (*ptrComandos)[4] = comandos;
-    Fila *ptrFila;
-    ptrFila = (Fila*) malloc(sizeof(Fila)); // validar se fila nao é NULL
     //Inicializando o jogo
+    Fila *ptrFila;
+    ptrFila = (Fila*) malloc(sizeof(Fila));
     initBoard(ptrMatriz);
     initMoviment(ptrPosicao,ptrDirecao);
     comandosFaseUm(ptrComandos);
@@ -103,44 +126,98 @@ int faseUm(){
     
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        printBoard(ptrMatriz);
-        printComands(ptrComandos,direcao);
-        enfileirarComandos(ptrFila);
+        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
-            system("cls");
-            printBoard(ptrMatriz);
-            printComands(ptrComandos,direcao);
-            sleep(1);
              if(filaVazia(ptrFila)==1){
                 resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
                 break;
             }
-            // system("cls");
-            // printBoard(ptrMatriz);
-            // printComands(ptrComandos,direcao);
             comandosInicio = retornarInicio(ptrFila);
+            system("cls");
+            printBoard(ptrMatriz);
+            printComands(ptrComandos,direcao);
+            impressaoNaoClassicaFila(ptrFila);
             printf("Comando: %d\n",comandosInicio.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicio.vezes);
-            impressaoNaoClassicaFila(ptrFila);
+            sleep(1);
             comandosJogo = desinfileirar(ptrFila);
             for(i=0;i<comandosInicio.vezes;i++){
-                executarComandos(comandosJogo,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
+                executarComandos(comandosJogo.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
             }
-            // sleep(1);
         }
-        sleep(1);
         if(chegouObjetivo(ptrPosicao,ptrMatriz)==1){
-            printf("Chegou no objetivo");
             if(filaVazia(ptrFila)==1){
+                system("cls");
+                printBoard(ptrMatriz);
+                printComands(ptrComandos,direcao);
+                sleep(1);
+                free(ptrFila);
+                return 1;
+            }else{
+                sleep(1);
+                resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
+                tentativa--;
+            }
+        }
+        if(tentativa == 0){
+            free(ptrFila);
+            return 0;
+        }
+    }
+    return 0;
+}
+
+int faseDois(){
+    //  Variaveis do jogo
+    ComandosPilha comandosJogo,comandosInicio;
+    int i,tentativa = 3, posicao[2];
+    int *ptrPosicao = &posicao;
+    char matriz[8][8],comandos[4][4],direcao;
+    char *ptrDirecao = &direcao;
+    char (*ptrMatriz)[8] = matriz;
+    char (*ptrComandos)[4] = comandos;
+    //Inicializando o jogo
+    NOPilha *ptrPilha;
+    inicializarPilha(&ptrPilha);
+    initBoard(ptrMatriz);
+    initMoviment(ptrPosicao,ptrDirecao);
+    comandosFaseUm(ptrComandos);
+    
+    while(tentativa!=0){
+        comandosFaseUm(ptrComandos);
+        printf("|------- Fase 2 -------|\n");
+        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao);
+        // loop interno
+        while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
+             if(pilhaVazia(ptrPilha)){
+                resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
+                tentativa--;
+                break;
+            }
+            comandosInicio = retornarTopo(ptrPilha);
+            system("cls");
+            printf("|------- Fase 2 -------|\n");
+            printBoard(ptrMatriz);
+            printComands(ptrComandos,direcao);
+            impressaoNaoClassicaPilha(ptrPilha);
+            printf("Comando: %d\n",comandosInicio.comando);
+            printf("Numero de vezes que sera executado: %d\n",comandosInicio.vezes);
+            sleep(1);
+            comandosJogo = desempilhar(&ptrPilha);
+            for(i=0;i<comandosInicio.vezes;i++){
+                executarComandos(comandosJogo.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
+            }
+        }
+        if(chegouObjetivo(ptrPosicao,ptrMatriz)==1){
+            if(pilhaVazia(ptrPilha)){
                 system("cls");
                 printBoard(ptrMatriz);
                 printComands(ptrComandos,direcao);
                 sleep(1);
                 return 1;
             }else{
-                printf("Else externo");
                 sleep(1);
                 resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
@@ -153,12 +230,31 @@ int faseUm(){
     return 0;
 }
 
-
 int main (){
+    
     if(faseUm()){
-        printf("Parabens vc é tchola");
-    }else{
-        printf("voce nao e tchola :(");
+        printf("Voce passou da Fase 1!\n");
+        sleep(1);
+        if(faseDois()){
+            printf("Voce passou da Fase 2!");
+        }
     }
+
+    // while(opcao=='S'){
+    //     int passouFaseUm = faseUm();
+    //     int passouFaseDois;
+    //     int passouFaseTres
+    //     if(passouFaseUm){
+    //         passouFaseDois = faseDois();
+    //     }
+    //     if(passouFaseDois){
+    //        passouFaseTres = faseTres(); 
+    //     }
+    //     if(passouFaseTres){
+    //         break;
+    //     }
+    //     printf("Deseja Continuar jogando");
+    // }
+
     return 0;
 }

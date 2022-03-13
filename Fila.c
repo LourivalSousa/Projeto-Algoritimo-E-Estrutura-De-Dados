@@ -71,10 +71,10 @@ Comandos desinfileirar (Fila *ptrFila){
 }
 
 void impressaoNaoClassicaFila(Fila *ptrFila){
+    printf("Fila: ");
     if(!filaVazia(ptrFila)){
         NO *aux;
         aux = ptrFila->inicio;
-        printf("Fila: ");
         while(aux!=NULL){
             printf("%d-%d ",aux->info.comando,aux->info.vezes);
             aux = aux->prox;
