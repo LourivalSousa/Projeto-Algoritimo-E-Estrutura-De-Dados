@@ -187,7 +187,6 @@ int faseDois(){
     
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        printf("|------- Fase 2 -------|\n");
         empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
@@ -198,7 +197,6 @@ int faseDois(){
             }
             comandosInicio = retornarTopo(ptrPilha);
             system("cls");
-            printf("|------- Fase 2 -------|\n");
             printBoard(ptrMatriz);
             printComands(ptrComandos,direcao);
             impressaoNaoClassicaPilha(ptrPilha);
@@ -223,38 +221,127 @@ int faseDois(){
                 tentativa--;
             }
         }
-        if(tentativa == 0){
-            return 0;
-        }
     }
     return 0;
 }
 
-int main (){
+int faseTres(){
+    ComandosPilha comandosJogoPilha, comandosInicioPilha;
+    Comandos comandosJogoFila,comandosInicioFila;
+    int i,tentativa = 3, posicao[2];
+    int *ptrPosicao = &posicao;
+    char matriz[8][8],comandos[4][4],direcao;
+    char *ptrDirecao = &direcao;
+    char (*ptrMatriz)[8] = matriz;
+    char (*ptrComandos)[4] = comandos;
+    //Inicializando o jogo
+    Fila *ptrFila;
+    ptrFila = (Fila*) malloc(sizeof(Fila));
+    initBoard(ptrMatriz);
+    initMoviment(ptrPosicao,ptrDirecao);
+    comandosFaseUm(ptrComandos);
+    inicializarFila(ptrFila);
     
-    if(faseUm()){
-        printf("Voce passou da Fase 1!\n");
-        sleep(1);
-        if(faseDois()){
-            printf("Voce passou da Fase 2!");
+    while(tentativa!=0){
+        comandosFaseUm(ptrComandos);
+        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao);
+        // loop interno
+        while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
+             if(filaVazia(ptrFila)==1){
+                resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
+                tentativa--;
+                break;
+            }
+            comandosInicioFila = retornarInicio(ptrFila);
+            system("cls");
+            printBoard(ptrMatriz);
+            printComands(ptrComandos,direcao);
+            impressaoNaoClassicaFila(ptrFila);
+            printf("Comando: %d\n",comandosInicioFila.comando);
+            printf("Numero de vezes que sera executado: %d\n",comandosInicioFila.vezes);
+            sleep(1);
+            comandosJogoFila = desinfileirar(ptrFila);
+            for(i=0;i<comandosJogoFila.vezes;i++){
+                executarComandos(comandosJogoFila.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
+            }
+        }
+        if(chegouObjetivo(ptrPosicao,ptrMatriz)==1){
+            if(filaVazia(ptrFila)==1){
+                system("cls");
+                printBoard(ptrMatriz);
+                printComands(ptrComandos,direcao);
+                sleep(1);
+                free(ptrFila);
+                break;
+            }else{
+                sleep(1);
+                resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
+                tentativa--;
+            }
         }
     }
+    if(tentativa == 0){
+        free(ptrFila);
+        return 0;
+    }
+    // Fase 3 parte 2
+    NOPilha *ptrPilha;
+    inicializarPilha(&ptrPilha);
+    ptrMatriz[0][0] = 'O';
+    printf("X-%d Y-%d",posicao[0],posicao[1]);
+    direcao = '<';
+    while(tentativa!=0){
+        comandosFaseUm(ptrComandos);
+        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao);
+        // loop interno
+        while(!chegouObjetivoFaseTres(ptrPosicao,ptrMatriz)){
+             if(pilhaVazia(ptrPilha)){
+                resetBoardFaseTres(ptrMatriz,ptrPosicao,ptrDirecao);
+                tentativa--;
+                break;
+            }
+            comandosInicioPilha = retornarTopo(ptrPilha);
+            system("cls");
+            printBoard(ptrMatriz);
+            printComands(ptrComandos,direcao);
+            impressaoNaoClassicaPilha(ptrPilha);
+            printf("Comando: %d\n",comandosInicioPilha.comando);
+            printf("Numero de vezes que sera executado: %d\n",comandosInicioPilha.vezes);
+            sleep(1);
+            comandosJogoPilha = desempilhar(&ptrPilha);
+            for(i=0;i<comandosJogoPilha.vezes;i++){
+                executarComandos(comandosJogoPilha.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
+            }
+        }
+        if(chegouObjetivoFaseTres(ptrPosicao,ptrMatriz)==1){
+            if(pilhaVazia(ptrPilha)){
+                system("cls");
+                printBoard(ptrMatriz);
+                printComands(ptrComandos,direcao);
+                sleep(1);
+                return 1;
+            }else{
+                sleep(1);
+                resetBoardFaseTres(ptrMatriz,ptrPosicao,ptrDirecao);
+                tentativa--;
+            }
+        }
+    }
+    return 0;
 
-    // while(opcao=='S'){
-    //     int passouFaseUm = faseUm();
-    //     int passouFaseDois;
-    //     int passouFaseTres
-    //     if(passouFaseUm){
-    //         passouFaseDois = faseDois();
+}
+int main (){
+    
+    // if(faseUm()){
+    //     printf("Voce passou da Fase 1!\n");
+    //     sleep(1);
+    //     if(faseDois()){
+    //         printf("Voce passou da Fase 2!");
     //     }
-    //     if(passouFaseDois){
-    //        passouFaseTres = faseTres(); 
-    //     }
-    //     if(passouFaseTres){
-    //         break;
-    //     }
-    //     printf("Deseja Continuar jogando");
     // }
+    if(faseTres()){
+        printf("Voce Ganhou o jogo!!");
+    }
 
     return 0;
 }

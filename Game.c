@@ -7,6 +7,19 @@ void initMoviment(int *ptrPosicao, char *ptrDirecao){
     *ptrDirecao = '>';
 }
 
+
+void resetBoardFaseTres(char (*ptrMatriz)[8],int *ptrCoord,int *ptrDirecao){
+    int x = ptrCoord[0];
+    int y = ptrCoord[1];
+    ptrMatriz[x][y] = ' ';
+    ptrMatriz[0][0] = 'O';
+    ptrMatriz[7][7] = 'P';
+    ptrCoord[0] = 7;
+    ptrCoord[1] = 7;
+    *ptrDirecao = '<';
+}
+
+
 void resetBoard(char (*ptrMatriz)[8],int *ptrCoord,int *ptrDirecao){
     int x = ptrCoord[0];
     int y = ptrCoord[1];
@@ -146,3 +159,13 @@ int chegouObjetivo(int *ptrCoord,char (*ptrMatriz)[8]){
     }
 }
 
+int chegouObjetivoFaseTres(int *ptrCoord,char (*ptrMatriz)[8]){
+    int x,y;
+    x = ptrCoord[0];
+    y = ptrCoord[1];
+    if(x==0 && y==0) {
+        return 1;
+    }else{
+        return 0;
+    }
+}
