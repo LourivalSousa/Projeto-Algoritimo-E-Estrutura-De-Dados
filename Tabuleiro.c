@@ -62,9 +62,10 @@ void printDirectons(char direction,int linha){
     }
 }
 
-void printBoard(char (*ptrBoard)[8]){
+void printBoard(char (*ptrBoard)[8],int fase){
     system("cls");
     int i,j;
+    printf("*-------------FASE %d-------------*\n",fase);
     for(i=0; i<LADOBOARD; i++){
         printf("|---|---|---|---|---|---|---|---|\n");
         printf("|");

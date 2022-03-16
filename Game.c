@@ -33,6 +33,12 @@ void resetBoard(char (*ptrMatriz)[8],int *ptrCoord,int *ptrDirecao){
 
 
 void initBoard(char (*ptrMatriz)[8]){
+    int i,j;
+      for(i=0;i<8;i++){
+        for(j=0;j<8;j++){
+            ptrMatriz[i][j] = '0';
+        }
+    }
     ptrMatriz[0][0] = 'P';
     ptrMatriz[1][0] = 'X';
     ptrMatriz[1][3] = 'X';

@@ -31,11 +31,11 @@ ComandosPilha pegarComandoPilha(){
 }
 
 
-void enfileirarComandos(Fila *ptrFila,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao){
+void enfileirarComandos(Fila *ptrFila,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao,int fase){
     Comandos comandosJogador;
     do {
         system("cls");
-        printBoard(ptrMatriz);
+        printBoard(ptrMatriz,fase);
         printComands(ptrComandos,direcao);
         impressaoNaoClassicaFila(ptrFila);
         comandosJogador = pegarComandoFila();
@@ -52,11 +52,11 @@ void enfileirarComandos(Fila *ptrFila,char (*ptrMatriz)[8],char (*ptrComandos)[4
 }
 
 
-void empilharComandos(NOPilha **ptrPilha,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao){
+void empilharComandos(NOPilha **ptrPilha,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao,int fase){
     ComandosPilha comandosJogador;
     do {
         system("cls");
-        printBoard(ptrMatriz);
+        printBoard(ptrMatriz,fase);
         printComands(ptrComandos,direcao);
         impressaoNaoClassicaPilha(*ptrPilha);
         comandosJogador = pegarComandoPilha();
@@ -120,7 +120,7 @@ void comandosFaseUm(char (*ptrComandos)[4]){
 int faseUm(){
     //  Variaveis do jogo
     Comandos comandosJogo,comandosInicio;
-    int i,tentativa = 3, posicao[2];
+    int i,tentativa = 3, posicao[2],fase=1;
     int *ptrPosicao = &posicao;
     char matriz[8][8],comandos[4][4],direcao;
     char *ptrDirecao = &direcao;
@@ -136,7 +136,7 @@ int faseUm(){
     
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao);
+        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao,fase);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
              if(filaVazia(ptrFila)==1){
@@ -146,8 +146,9 @@ int faseUm(){
             }
             comandosInicio = retornarInicio(ptrFila);
             system("cls");
-            printBoard(ptrMatriz);
+            printBoard(ptrMatriz,fase);
             printComands(ptrComandos,direcao);
+            printf("TENTATIVAS: %d\n",tentativa);
             impressaoNaoClassicaFila(ptrFila);
             printf("Comando: %d\n",comandosInicio.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicio.vezes);
@@ -160,7 +161,7 @@ int faseUm(){
         if(chegouObjetivo(ptrPosicao,ptrMatriz)==1){
             if(filaVazia(ptrFila)==1){
                 system("cls");
-                printBoard(ptrMatriz);
+                printBoard(ptrMatriz,fase);
                 printComands(ptrComandos,direcao);
                 sleep(1);
                 free(ptrFila);
@@ -182,7 +183,7 @@ int faseUm(){
 int faseDois(){
     //  Variaveis do jogo
     ComandosPilha comandosJogo,comandosInicio;
-    int i,tentativa = 3, posicao[2];
+    int i,tentativa = 3, posicao[2],fase=2;
     int *ptrPosicao = &posicao;
     char matriz[8][8],comandos[4][4],direcao;
     char *ptrDirecao = &direcao;
@@ -197,7 +198,7 @@ int faseDois(){
     
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao);
+        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao,fase);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
              if(pilhaVazia(ptrPilha)){
@@ -207,8 +208,9 @@ int faseDois(){
             }
             comandosInicio = retornarTopo(ptrPilha);
             system("cls");
-            printBoard(ptrMatriz);
+            printBoard(ptrMatriz,fase);
             printComands(ptrComandos,direcao);
+            printf("TENTATIVAS: %d\n",tentativa);
             impressaoNaoClassicaPilha(ptrPilha);
             printf("Comando: %d\n",comandosInicio.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicio.vezes);
@@ -221,7 +223,7 @@ int faseDois(){
         if(chegouObjetivo(ptrPosicao,ptrMatriz)==1){
             if(pilhaVazia(ptrPilha)){
                 system("cls");
-                printBoard(ptrMatriz);
+                printBoard(ptrMatriz,fase);
                 printComands(ptrComandos,direcao);
                 sleep(1);
                 return 1;
@@ -238,7 +240,7 @@ int faseDois(){
 int faseTres(){
     ComandosPilha comandosJogoPilha, comandosInicioPilha;
     Comandos comandosJogoFila,comandosInicioFila;
-    int i,tentativa = 3, posicao[2];
+    int i,tentativa = 3, posicao[2],fase=3;
     int *ptrPosicao = &posicao;
     char matriz[8][8],comandos[4][4],direcao;
     char *ptrDirecao = &direcao;
@@ -254,7 +256,7 @@ int faseTres(){
     
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao);
+        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao,fase);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
              if(filaVazia(ptrFila)==1){
@@ -264,8 +266,9 @@ int faseTres(){
             }
             comandosInicioFila = retornarInicio(ptrFila);
             system("cls");
-            printBoard(ptrMatriz);
+            printBoard(ptrMatriz,fase);
             printComands(ptrComandos,direcao);
+            printf("TENTATIVAS: %d\n",tentativa);
             impressaoNaoClassicaFila(ptrFila);
             printf("Comando: %d\n",comandosInicioFila.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicioFila.vezes);
@@ -278,7 +281,7 @@ int faseTres(){
         if(chegouObjetivo(ptrPosicao,ptrMatriz)==1){
             if(filaVazia(ptrFila)==1){
                 system("cls");
-                printBoard(ptrMatriz);
+                printBoard(ptrMatriz,fase);
                 printComands(ptrComandos,direcao);
                 sleep(1);
                 free(ptrFila);
@@ -302,7 +305,7 @@ int faseTres(){
     direcao = '<';
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao);
+        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao,fase);
         // loop interno
         while(!chegouObjetivoFaseTres(ptrPosicao,ptrMatriz)){
              if(pilhaVazia(ptrPilha)){
@@ -312,7 +315,7 @@ int faseTres(){
             }
             comandosInicioPilha = retornarTopo(ptrPilha);
             system("cls");
-            printBoard(ptrMatriz);
+            printBoard(ptrMatriz,fase);
             printComands(ptrComandos,direcao);
             impressaoNaoClassicaPilha(ptrPilha);
             printf("Comando: %d\n",comandosInicioPilha.comando);
@@ -326,7 +329,7 @@ int faseTres(){
         if(chegouObjetivoFaseTres(ptrPosicao,ptrMatriz)==1){
             if(pilhaVazia(ptrPilha)){
                 system("cls");
-                printBoard(ptrMatriz);
+                printBoard(ptrMatriz,fase);
                 printComands(ptrComandos,direcao);
                 sleep(1);
                 return 1;
@@ -353,6 +356,9 @@ int main (){
             }
         }
     }
+    // if(faseTres()){
+    //     printf("Voce passou da fase 3");
+    // }
     
 
     return 0;
