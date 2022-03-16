@@ -31,12 +31,13 @@ ComandosPilha pegarComandoPilha(){
 }
 
 
-void enfileirarComandos(Fila *ptrFila,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao,int fase){
+void enfileirarComandos(Fila *ptrFila,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao,int fase,int tentativa){
     Comandos comandosJogador;
     do {
         system("cls");
         printBoard(ptrMatriz,fase);
         printComands(ptrComandos,direcao);
+        printf("TENTATIVAS: %d\n",tentativa);
         impressaoNaoClassicaFila(ptrFila);
         comandosJogador = pegarComandoFila();
         if(comandosJogador.comando==0 || comandosJogador.vezes==0){
@@ -52,12 +53,13 @@ void enfileirarComandos(Fila *ptrFila,char (*ptrMatriz)[8],char (*ptrComandos)[4
 }
 
 
-void empilharComandos(NOPilha **ptrPilha,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao,int fase){
+void empilharComandos(NOPilha **ptrPilha,char (*ptrMatriz)[8],char (*ptrComandos)[4],char direcao,int fase, int tentativa){
     ComandosPilha comandosJogador;
     do {
         system("cls");
         printBoard(ptrMatriz,fase);
         printComands(ptrComandos,direcao);
+        printf("TENTATIVAS: %d\n",tentativa);
         impressaoNaoClassicaPilha(*ptrPilha);
         comandosJogador = pegarComandoPilha();
         if(comandosJogador.comando==0 || comandosJogador.vezes==0){
@@ -136,7 +138,7 @@ int faseUm(){
     
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao,fase);
+        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao,fase,tentativa);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
              if(filaVazia(ptrFila)==1){
@@ -198,7 +200,7 @@ int faseDois(){
     
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao,fase);
+        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao,fase,tentativa);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
              if(pilhaVazia(ptrPilha)){
@@ -256,7 +258,7 @@ int faseTres(){
     
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao,fase);
+        enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao,fase,tentativa);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
              if(filaVazia(ptrFila)==1){
@@ -305,7 +307,7 @@ int faseTres(){
     direcao = '<';
     while(tentativa!=0){
         comandosFaseUm(ptrComandos);
-        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao,fase);
+        empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao,fase,tentativa);
         // loop interno
         while(!chegouObjetivoFaseTres(ptrPosicao,ptrMatriz)){
              if(pilhaVazia(ptrPilha)){
