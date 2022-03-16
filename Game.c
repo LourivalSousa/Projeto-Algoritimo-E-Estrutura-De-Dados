@@ -175,3 +175,79 @@ int chegouObjetivoFaseTres(int *ptrCoord,char (*ptrMatriz)[8]){
         return 0;
     }
 }
+
+
+void comandosFaseUm(char (*ptrComandos)[4]){
+    int i,j;
+
+    for(i=0;i<4;i++){
+        for(j=0;j<4;j++){
+            ptrComandos[i][j] = '0';
+        }
+    }
+    //Comando 1
+    ptrComandos[0][0] = 'F';
+    ptrComandos[0][1] = 'F';
+    //Comando 2
+    ptrComandos[1][0] = 'F';
+    ptrComandos[1][1] = 'D';
+    // Comando 3
+    ptrComandos[2][0] = 'E';
+    ptrComandos[2][1] = 'F';
+    ptrComandos[2][2] = 'F';
+    // Comando 4
+    ptrComandos[3][0] = 'D';
+    ptrComandos[3][1] = 'F';
+    ptrComandos[3][2] = 'F';
+    ptrComandos[3][3] = 'F';
+}
+
+void comandosFaseDois(char (*ptrComandos)[4]){
+    int i,j;
+
+    for(i=0;i<4;i++){
+        for(j=0;j<4;j++){
+            ptrComandos[i][j] = '0';
+        }
+    }
+    //Comando 1
+    ptrComandos[0][0] = 'F';
+    ptrComandos[0][1] = 'D';
+    ptrComandos[0][2] = 'F';
+    //Comando 2
+    ptrComandos[1][0] = 'F';
+    ptrComandos[1][1] = 'F';
+    ptrComandos[1][2] = 'E';
+    // Comando 3
+    ptrComandos[2][0] = 'E';
+    ptrComandos[2][1] = 'F';
+    // Comando 4
+    ptrComandos[3][0] = 'F';
+    ptrComandos[3][1] = 'F';
+    ptrComandos[3][2] = 'D';
+}
+
+void comandosFaseTres(char (*ptrComandos)[4]){
+    int i,j;
+
+    for(i=0;i<4;i++){
+        for(j=0;j<4;j++){
+            ptrComandos[i][j] = '0';
+        }
+    }
+    //Comando 1
+    ptrComandos[0][0] = 'F';
+    ptrComandos[0][1] = 'D';
+    ptrComandos[0][2] = 'F';
+    //Comando 2
+    ptrComandos[1][0] = 'F';
+    ptrComandos[1][1] = 'F';
+    ptrComandos[1][2] = 'E';
+    // Comando 3
+    ptrComandos[2][0] = 'E';
+    ptrComandos[2][1] = 'F';
+    // Comando 4
+    ptrComandos[3][0] = 'F';
+    ptrComandos[3][1] = 'F';
+    ptrComandos[3][2] = 'D';
+}

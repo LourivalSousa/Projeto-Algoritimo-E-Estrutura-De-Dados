@@ -96,29 +96,6 @@ void executarComandos(int comandoJogo,char (*ptrMatriz)[8],char (*ptrComandos)[4
     }
 }
 
-void comandosFaseUm(char (*ptrComandos)[4]){
-    int i,j;
-
-    for(i=0;i<4;i++){
-        for(j=0;j<4;j++){
-            ptrComandos[i][j] = '0';
-        }
-    }
-    //Comando 1
-    ptrComandos[0][0] = 'F';
-    ptrComandos[0][1] = 'F';
-    ptrComandos[0][2] = 'F';
-    //Comando 2
-    ptrComandos[1][0] = 'E';
-    ptrComandos[1][1] = 'F';
-    // Comando 3
-    ptrComandos[2][0] = 'D';
-    ptrComandos[2][1] = 'F';
-    // Comando 4
-    ptrComandos[3][0] = 'F';
-    ptrComandos[3][1] = 'E';
-}
-
 int faseUm(){
     //  Variaveis do jogo
     Comandos comandosJogo,comandosInicio;
@@ -133,7 +110,6 @@ int faseUm(){
     ptrFila = (Fila*) malloc(sizeof(Fila));
     initBoard(ptrMatriz);
     initMoviment(ptrPosicao,ptrDirecao);
-    comandosFaseUm(ptrComandos);
     inicializarFila(ptrFila);
     
     while(tentativa!=0){
@@ -196,10 +172,9 @@ int faseDois(){
     inicializarPilha(&ptrPilha);
     initBoard(ptrMatriz);
     initMoviment(ptrPosicao,ptrDirecao);
-    comandosFaseUm(ptrComandos);
     
     while(tentativa!=0){
-        comandosFaseUm(ptrComandos);
+        comandosFaseDois(ptrComandos);
         empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao,fase,tentativa);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
@@ -347,20 +322,20 @@ int faseTres(){
 }
 int main (){
     
-    if(faseUm()){
-        printf("Voce passou da Fase 1!\n");
-        sleep(1);
-        if(faseDois()){
-            printf("Voce passou da Fase 2!");
-            sleep(1);
-            if(faseTres()){
-                printf("Voce Ganhou o jogo!!");
-            }
-        }
-    }
-    // if(faseTres()){
-    //     printf("Voce passou da fase 3");
+    // if(faseUm()){
+    //     printf("Voce passou da Fase 1!\n");
+    //     sleep(1);
+    //     if(faseDois()){
+    //         printf("Voce passou da Fase 2!");
+    //         sleep(1);
+    //         if(faseTres()){
+    //             printf("Voce Ganhou o jogo!!");
+    //         }
+    //     }
     // }
+    if(faseDois()){
+        printf("Voce passou da fase 2");
+    }
     
 
     return 0;
