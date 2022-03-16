@@ -42,7 +42,12 @@ void enfileirarComandos(Fila *ptrFila,char (*ptrMatriz)[8],char (*ptrComandos)[4
         if(comandosJogador.comando==0 || comandosJogador.vezes==0){
             break;
         }
-        enfileirar(ptrFila,comandosJogador);
+        if(comandosJogador.comando > 4 || comandosJogador.comando < 0 ){
+            printf("Comando invalido, insira seu comando novamente...\n");
+            sleep(1);
+        }else{
+            enfileirar(ptrFila,comandosJogador);
+        }
     } while (comandosJogador.comando > 0 || comandosJogador.vezes > 0);
 }
 
@@ -58,7 +63,12 @@ void empilharComandos(NOPilha **ptrPilha,char (*ptrMatriz)[8],char (*ptrComandos
         if(comandosJogador.comando==0 || comandosJogador.vezes==0){
             break;
         }
-        empilhar(ptrPilha,comandosJogador);
+        if(comandosJogador.comando > 4 || comandosJogador.comando < 0 ){
+            printf("Comando invalido, insira seu comando novamente...\n");
+            sleep(1);
+        }else{
+            empilhar(ptrPilha,comandosJogador);
+        }
     }while (comandosJogador.comando > 0 || comandosJogador.vezes > 0);
 }
 
@@ -332,16 +342,18 @@ int faseTres(){
 }
 int main (){
     
-    // if(faseUm()){
-    //     printf("Voce passou da Fase 1!\n");
-    //     sleep(1);
-    //     if(faseDois()){
-    //         printf("Voce passou da Fase 2!");
-    //     }
-    // }
-    if(faseTres()){
-        printf("Voce Ganhou o jogo!!");
+    if(faseUm()){
+        printf("Voce passou da Fase 1!\n");
+        sleep(1);
+        if(faseDois()){
+            printf("Voce passou da Fase 2!");
+            sleep(1);
+            if(faseTres()){
+                printf("Voce Ganhou o jogo!!");
+            }
+        }
     }
+    
 
     return 0;
 }
