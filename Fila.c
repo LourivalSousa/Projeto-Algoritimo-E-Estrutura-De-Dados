@@ -55,7 +55,7 @@ void enfileirar(Fila *ptrFila,Comandos elemento){
     }
 }
 
-Comandos desinfileirar (Fila *ptrFila){
+Comandos desenfileirar (Fila *ptrFila){
     NO *aux;
     Comandos elemento;
     if(!filaVazia(ptrFila)){

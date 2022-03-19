@@ -131,7 +131,7 @@ int faseUm(){
             printf("Comando: %d\n",comandosInicio.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicio.vezes);
             sleep(1);
-            comandosJogo = desinfileirar(ptrFila);
+            comandosJogo = desenfileirar(ptrFila);
             for(i=0;i<comandosInicio.vezes;i++){
                 executarComandos(comandosJogo.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
             }
@@ -228,11 +228,11 @@ int faseTres(){
     ptrFila = (Fila*) malloc(sizeof(Fila));
     initBoard(ptrMatriz);
     initMoviment(ptrPosicao,ptrDirecao);
-    comandosFaseUm(ptrComandos);
+    comandosFaseTres(ptrComandos);
     inicializarFila(ptrFila);
     
     while(tentativa!=0){
-        comandosFaseUm(ptrComandos);
+        comandosFaseTres(ptrComandos);
         enfileirarComandos(ptrFila,ptrMatriz,ptrComandos,direcao,fase,tentativa);
         // loop interno
         while(!chegouObjetivo(ptrPosicao,ptrMatriz)){
@@ -250,7 +250,7 @@ int faseTres(){
             printf("Comando: %d\n",comandosInicioFila.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicioFila.vezes);
             sleep(1);
-            comandosJogoFila = desinfileirar(ptrFila);
+            comandosJogoFila = desenfileirar(ptrFila);
             for(i=0;i<comandosJogoFila.vezes;i++){
                 executarComandos(comandosJogoFila.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
             }
@@ -281,7 +281,7 @@ int faseTres(){
     printf("X-%d Y-%d",posicao[0],posicao[1]);
     direcao = '<';
     while(tentativa!=0){
-        comandosFaseUm(ptrComandos);
+        comandosFaseTres(ptrComandos);
         empilharComandos(&ptrPilha,ptrMatriz,ptrComandos,direcao,fase,tentativa);
         // loop interno
         while(!chegouObjetivoFaseTres(ptrPosicao,ptrMatriz)){
@@ -319,24 +319,4 @@ int faseTres(){
     }
     return 0;
 
-}
-int main (){
-    
-    // if(faseUm()){
-    //     printf("Voce passou da Fase 1!\n");
-    //     sleep(1);
-    //     if(faseDois()){
-    //         printf("Voce passou da Fase 2!");
-    //         sleep(1);
-    //         if(faseTres()){
-    //             printf("Voce Ganhou o jogo!!");
-    //         }
-    //     }
-    // }
-    if(faseDois()){
-        printf("Voce passou da fase 2");
-    }
-    
-
-    return 0;
 }

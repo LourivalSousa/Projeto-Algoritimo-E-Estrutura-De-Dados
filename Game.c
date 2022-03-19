@@ -224,7 +224,7 @@ void comandosFaseDois(char (*ptrComandos)[4]){
     // Comando 4
     ptrComandos[3][0] = 'F';
     ptrComandos[3][1] = 'F';
-    ptrComandos[3][2] = 'D';
+    ptrComandos[3][2] = 'F';
 }
 
 void comandosFaseTres(char (*ptrComandos)[4]){
@@ -237,17 +237,17 @@ void comandosFaseTres(char (*ptrComandos)[4]){
     }
     //Comando 1
     ptrComandos[0][0] = 'F';
-    ptrComandos[0][1] = 'D';
-    ptrComandos[0][2] = 'F';
+    ptrComandos[0][1] = 'E';
     //Comando 2
     ptrComandos[1][0] = 'F';
     ptrComandos[1][1] = 'F';
-    ptrComandos[1][2] = 'E';
     // Comando 3
-    ptrComandos[2][0] = 'E';
+    ptrComandos[2][0] = 'D';
     ptrComandos[2][1] = 'F';
+    ptrComandos[2][2] = 'F';
     // Comando 4
-    ptrComandos[3][0] = 'F';
+    ptrComandos[3][0] = 'E';
     ptrComandos[3][1] = 'F';
-    ptrComandos[3][2] = 'D';
+    ptrComandos[3][2] = 'F';
+    ptrComandos[3][3] = 'F';
 }

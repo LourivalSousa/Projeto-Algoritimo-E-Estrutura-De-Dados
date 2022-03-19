@@ -22,13 +22,13 @@ void printComands(char (*ptrComandos)[4],char direction){
            }
         }
         if(i<2){
-            printDirectons(direction,i);
+            printDirections(direction,i);
         }
         printf("\n");
     }
     printf("\n");
 }
-void printDirectons(char direction,int linha){
+void printDirections(char direction,int linha){
     switch (direction)
     {
     case '>':
@@ -65,7 +65,7 @@ void printDirectons(char direction,int linha){
 void printBoard(char (*ptrBoard)[8],int fase){
     system("cls");
     int i,j;
-    printf("*-------------FASE %d-------------*\n",fase);
+    printf("*-------------FASE %d------------*\n",fase);
     for(i=0; i<LADOBOARD; i++){
         printf("|---|---|---|---|---|---|---|---|\n");
         printf("|");
