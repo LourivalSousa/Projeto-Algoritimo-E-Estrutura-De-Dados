@@ -65,5 +65,6 @@ int main (){
         }
     }while(op!=2);
     printf("Saindo...");
+    sleep(2);
     return 0;
 }

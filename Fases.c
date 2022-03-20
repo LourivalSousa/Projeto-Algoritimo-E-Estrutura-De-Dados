@@ -67,7 +67,7 @@ void empilharComandos(NOPilha **ptrPilha,char (*ptrMatriz)[8],char (*ptrComandos
         }
         if(comandosJogador.comando > 4 || comandosJogador.comando < 0 ){
             printf("Comando invalido, insira seu comando novamente...\n");
-            sleep(1);
+            sleep(2);
         }else{
             empilhar(ptrPilha,comandosJogador);
         }
@@ -130,7 +130,7 @@ int faseUm(){
             impressaoNaoClassicaFila(ptrFila);
             printf("Comando: %d\n",comandosInicio.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicio.vezes);
-            sleep(1);
+            sleep(2);
             comandosJogo = desenfileirar(ptrFila);
             for(i=0;i<comandosInicio.vezes;i++){
                 executarComandos(comandosJogo.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
@@ -141,11 +141,11 @@ int faseUm(){
                 system("cls");
                 printBoard(ptrMatriz,fase);
                 printComands(ptrComandos,direcao);
-                sleep(1);
+                sleep(2);
                 free(ptrFila);
                 return 1;
             }else{
-                sleep(1);
+                sleep(2);
                 resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
             }
@@ -191,7 +191,7 @@ int faseDois(){
             impressaoNaoClassicaPilha(ptrPilha);
             printf("Comando: %d\n",comandosInicio.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicio.vezes);
-            sleep(1);
+            sleep(2);
             comandosJogo = desempilhar(&ptrPilha);
             for(i=0;i<comandosInicio.vezes;i++){
                 executarComandos(comandosJogo.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
@@ -202,10 +202,10 @@ int faseDois(){
                 system("cls");
                 printBoard(ptrMatriz,fase);
                 printComands(ptrComandos,direcao);
-                sleep(1);
+                sleep(2);
                 return 1;
             }else{
-                sleep(1);
+                sleep(2);
                 resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
             }
@@ -249,7 +249,7 @@ int faseTres(){
             impressaoNaoClassicaFila(ptrFila);
             printf("Comando: %d\n",comandosInicioFila.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicioFila.vezes);
-            sleep(1);
+            sleep(2);
             comandosJogoFila = desenfileirar(ptrFila);
             for(i=0;i<comandosJogoFila.vezes;i++){
                 executarComandos(comandosJogoFila.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
@@ -260,11 +260,11 @@ int faseTres(){
                 system("cls");
                 printBoard(ptrMatriz,fase);
                 printComands(ptrComandos,direcao);
-                sleep(1);
+                sleep(2);
                 free(ptrFila);
                 break;
             }else{
-                sleep(1);
+                sleep(2);
                 resetBoard(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
             }
@@ -297,7 +297,7 @@ int faseTres(){
             impressaoNaoClassicaPilha(ptrPilha);
             printf("Comando: %d\n",comandosInicioPilha.comando);
             printf("Numero de vezes que sera executado: %d\n",comandosInicioPilha.vezes);
-            sleep(1);
+            sleep(2);
             comandosJogoPilha = desempilhar(&ptrPilha);
             for(i=0;i<comandosJogoPilha.vezes;i++){
                 executarComandos(comandosJogoPilha.comando,ptrMatriz,ptrComandos,ptrDirecao,ptrPosicao);
@@ -308,10 +308,10 @@ int faseTres(){
                 system("cls");
                 printBoard(ptrMatriz,fase);
                 printComands(ptrComandos,direcao);
-                sleep(1);
+                sleep(2);
                 return 1;
             }else{
-                sleep(1);
+                sleep(2);
                 resetBoardFaseTres(ptrMatriz,ptrPosicao,ptrDirecao);
                 tentativa--;
             }
